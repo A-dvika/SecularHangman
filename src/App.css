@@ -1,0 +1,45 @@
+body {
+  margin: 0;
+  padding: 0;
+  background-color: beige;
+  font-family: Arial, sans-serif;
+}
+
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+header, footer {
+  background-color: brown;
+  color: white;
+  padding: 20px;
+  text-align: center;
+}
+
+.main-content {
+  flex: 1;
+  display: flex;
+  justify-content: center; /* Center content horizontally */
+  align-items: center; /* Center content vertically */
+  padding: 20px;
+  background-color: beige;
+}
+
+footer {
+  background-color: brown;
+  color: white;
+  text-align: center;
+  padding: 10px;
+}
+
+
+
+.game-section {
+  width: 100%; /* Adjust width as needed */
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* Center game content vertically */
+  align-items: flex-start; /* Align game content to the left */
+}
