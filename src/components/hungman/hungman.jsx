@@ -11,21 +11,22 @@ function getWord() {
 
 function Hungman() {
   const randomnumber = Wordlist[Math.floor(Math.random() * Wordlist.length)];
-  const [wordToGuess, setWordToGuess] = useState(() => randomnumber.word);
+  const [wordToGuess, setWordToGuess] = useState(() => randomnumber.word.toLowerCase()); // Convert to lowercase
   const [Hint, setHint] = useState(randomnumber.hint);
   const [guessedLetters, setGuessedLetters] = useState([]);
 
   const incorrectLetters = guessedLetters.filter(
-    (letter) => !wordToGuess.includes(letter)
+    (letter) => !wordToGuess.includes(letter.toLowerCase()) // Compare lowercase letters
   );
 
   const isLoser = incorrectLetters.length >= 6;
-  const isWinner = wordToGuess.split("").every((letter) => guessedLetters.includes(letter));
+  const isWinner = wordToGuess.split("").every((letter) => guessedLetters.includes(letter.toLowerCase()));
 
   const addGuessedLetter = useCallback(
     (letter) => {
-      if (guessedLetters.includes(letter) || isLoser || isWinner) return;
-      setGuessedLetters((currentLetters) => [...currentLetters, letter]);
+      const lowerCaseLetter = letter.toLowerCase();
+      if (guessedLetters.includes(lowerCaseLetter) || isLoser || isWinner) return;
+      setGuessedLetters((currentLetters) => [...currentLetters, lowerCaseLetter]);
     },
     [guessedLetters, isWinner, isLoser]
   );
@@ -36,7 +37,7 @@ function Hungman() {
 
   useEffect(() => {
     const handler = (e) => {
-      const key = e.key;
+      const key = e.key.toLowerCase(); // Convert input key to lowercase
       if (!key.match(/^[a-z]/)) return;
       e.preventDefault();
       addGuessedLetter(key);
@@ -53,7 +54,7 @@ function Hungman() {
       if (key !== "Enter") return;
       e.preventDefault();
       setGuessedLetters([]);
-      setWordToGuess(getWord());
+      setWordToGuess(getWord().toLowerCase()); // Set the new word in lowercase
     };
     document.addEventListener("keypress", handler);
     return () => {
@@ -101,7 +102,7 @@ function Hungman() {
             textAlign="center"
           >
             <Text fontSize="2xl" fontWeight="bold" color="gray.700">{Hint}</Text>
-            {isLoser && (
+            {isLoser && isWinner && (
               <Button colorScheme="blue" onClick={btnrefresh} mt={4}>
                 Try again
               </Button>
@@ -115,7 +116,7 @@ function Hungman() {
             textAlign="center"
           >
             <Keyboard
-              activeLetters={guessedLetters.filter((letter) => wordToGuess.includes(letter))}
+              activeLetters={guessedLetters.filter((letter) => wordToGuess.includes(letter.toLowerCase()))} // Ensure lowercase match
               inactiveLetters={incorrectLetters}
               addGuessedLetter={addGuessedLetter}
               disabled={isWinner || isLoser}
@@ -128,3 +129,4 @@ function Hungman() {
 }
 
 export default Hungman;
+
