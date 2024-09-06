@@ -3,7 +3,7 @@ import React from 'react';
 function Navbar() {
   return (
     <nav className="navbar">
-      <h1 className="navbar-logo">Hangman Game</h1>
+      <h1 className="navbar-logo">Secular Hangman</h1>
     </nav>
   );
 }

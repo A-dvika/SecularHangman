@@ -63,29 +63,49 @@ function Hungman() {
   }, []);
 
   return (
-    <Box className="max-w-4xl flex flex-row gap-2 m-auto items-center">
+    <Box className="max-w-4xl m-auto items-center">
+      {/* Outer container for drawing and game layout */}
       <Box
-        w="33%"
-        bgGradient="linear(to-r, teal.500, green.500)"
-        borderRadius="md"
+        w="100%"
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
         p={4}
-        textAlign="center"
+        mb={4}
       >
-        <HangmanDrawing numberOfGuesses={incorrectLetters.length} />
-      </Box>
+        {/* Hangman Drawing centered */}
+        <Box
+          bgGradient="linear(to-r, teal.500, green.500)"
+          borderRadius="md"
+          p={4}
+          mb={6}
+          textAlign="center"
+          width="50%"  // Adjust drawing size, you can tweak this for larger or smaller screens
+        >
+          <HangmanDrawing numberOfGuesses={incorrectLetters.length} />
+        </Box>
 
-      <Box w="66%">
-        <VStack spacing={4} align="stretch">
+        <VStack spacing={4} w="100%" align="stretch">
           <Box
             bgGradient="linear(to-r, purple.500, pink.500)"
             borderRadius="md"
             p={4}
             textAlign="center"
           >
-            {isWinner && <Text fontSize="2xl" fontWeight="bold" color="green.600">Winner!! - Refresh the page to try again..</Text>}
-            {isLoser && <Text fontSize="2xl" fontWeight="bold" color="red.600">You Lost, Nice Try!! - Refresh the page to try again..</Text>}
+            {isWinner && (
+              <Text fontSize="7xl" fontWeight="bold" color="green.600">
+                🎉🎊 Congratulations! You Won! 🎊🎉
+              </Text>
+            )}
+            {isLoser && (
+              <Text fontSize="7xl" fontWeight="bold" color="red.600">
+                😞 Game Over! Better luck next time! 😞
+              </Text>
+            )}
           </Box>
 
+          {/* Display Hangman Word */}
           <Box
             bgGradient="linear(to-r, blue.500, cyan.500)"
             borderRadius="md"
@@ -95,31 +115,70 @@ function Hungman() {
             <HangmanWord reveal={isLoser} guessedLetters={guessedLetters} wordToGuess={wordToGuess} />
           </Box>
 
+          {/* Display Hint */}
           <Box
-            bgGradient="linear(to-r, orange.500, yellow.500)"
+            bgGradient="linear(to-r, orange.500, yellow.500)" // Gradient background for appeal
             borderRadius="md"
+            p={6} // Increase padding for better spacing
+            textAlign="center"
+            boxShadow="lg" // Adds a shadow for a nice effect
+            border="2px solid" // Add a solid border for emphasis
+            borderColor="orange.400" // Color of the border
+            maxW="100%" // Set a maximum width to control the size
+            mx="auto" // Center horizontally
+          >
+            <Text fontSize="2xl" fontWeight="bold" color="gray.800">
+              Hint: {Hint}
+            </Text>
+          </Box>
+
+          {/* Try Again/Play Again Button Box */}
+          <Box
+            mt={4}
             p={4}
             textAlign="center"
+            boxShadow="lg"
+            bg="gray.100"
           >
-            <Text fontSize="2xl" fontWeight="bold" color="gray.700">{Hint}</Text>
-            {isLoser && isWinner && (
-              <Button colorScheme="blue" onClick={btnrefresh} mt={4}>
-                Try again
-              </Button>
+            {(isWinner || isLoser) && (
+              <button
+                onClick={btnrefresh}
+                style={{
+                  backgroundColor: '#3182CE',
+                  color: 'white',
+                  padding: '10px 20px',
+                  fontSize: '18px',
+                  fontWeight: 'bold',
+                  border: 'none',
+                  borderRadius: '5px',
+                  cursor: 'pointer',
+                  transition: 'background-color 0.3s'
+                }}
+                onMouseOver={(e) => e.target.style.backgroundColor = '#2B6CB0'}
+                onMouseOut={(e) => e.target.style.backgroundColor = '#3182CE'}
+              >
+                {isWinner ? "Play Again" : "Try Again"}
+              </button>
             )}
           </Box>
 
+
+
+
+          {/* Expanded Keyboard Section */}
           <Box
             bgGradient="linear(to-r, red.500, yellow.500)"
             borderRadius="md"
             p={4}
             textAlign="center"
+            width="100%"  // Make the keyboard span the entire width of the container
           >
             <Keyboard
               activeLetters={guessedLetters.filter((letter) => wordToGuess.includes(letter.toLowerCase()))} // Ensure lowercase match
               inactiveLetters={incorrectLetters}
               addGuessedLetter={addGuessedLetter}
               disabled={isWinner || isLoser}
+              gridTemplateColumns="repeat(auto-fill, minmax(40px, 1fr))" // Ensure dynamic resizing for keyboard buttons
             />
           </Box>
         </VStack>
@@ -129,4 +188,3 @@ function Hungman() {
 }
 
 export default Hungman;
-

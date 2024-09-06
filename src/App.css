@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Abel&family=Dancing+Script:wght@400..700&display=swap');
+
 body {
   margin: 0;
   padding: 0;
@@ -5,17 +7,19 @@ body {
   font-family: Arial, sans-serif;
 }
 
-.app-container {
+/* .app-container {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-}
+} */
 
-header, footer {
-  background-color: brown;
+header {
+  background-color: #342A22;
   color: white;
-  padding: 20px;
-  text-align: center;
+  padding: 15px;
+  text-align: left;
+  font-family: "Abel", sans-serif;
+  font-size: x-large;
 }
 
 .main-content {
@@ -24,15 +28,15 @@ header, footer {
   justify-content: center; /* Center content horizontally */
   align-items: center; /* Center content vertically */
   padding: 20px;
-  background-color: beige;
+  background-color: #E6DFD5;
 }
 
-footer {
+/* footer {
   background-color: brown;
   color: white;
   text-align: center;
   padding: 10px;
-}
+} */
 
 
 .game-section {

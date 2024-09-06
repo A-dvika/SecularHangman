@@ -19,9 +19,9 @@ function App() {
         
       </div>
 
-      <footer>
+      {/* <footer>
         <Footer />
-      </footer>
+      </footer> */}
     </div>
   );
 }
